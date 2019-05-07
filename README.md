@@ -45,13 +45,11 @@ Things you may want to cover:
 |Column|Type|Options|
 |------|----|-------|
 |name|string|add_index :groups, :group_name, null: false|
-|member|string|null: false|
 
 ###Association
 - has_many :messages
 - has_many :members
 - has_many :users, through: :members
-
 
 ## membersテーブル
 
