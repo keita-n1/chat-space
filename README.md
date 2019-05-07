@@ -17,10 +17,10 @@ Things you may want to cover:
 
 |Column|Type|Options|
 |------|----|-------|
-|body|text|add_index :messages, :body, null: false|
+|body|text|
 |image|string|
-|group_id|integer|null: false, foreign_key: true|
-|user_id|integer|null: false, foreign_key: true|
+|group_id|references|null: false, foreign_key: true|
+|user_id|references|null: false, foreign_key: true|
 
 ### Association
 - belongs_to :user
@@ -44,7 +44,7 @@ Things you may want to cover:
 
 |Column|Type|Options|
 |------|----|-------|
-|group_name|string|add_index :groups, :group_name, null: false|
+|name|string|add_index :groups, :group_name, null: false|
 |member|string|null: false|
 
 ###Association
@@ -57,8 +57,8 @@ Things you may want to cover:
 
 |Column|Type|Options|
 |------|----|-------|
-|user_id|integer|null: false, foreign_key: true|
-|group_id|integer|null: false, foreign_key: true|
+|user_id|references|null: false, foreign_key: true|
+|group_id|references|null: false, foreign_key: true|
 
 ###Association
 - belongs_to :group
