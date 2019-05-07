@@ -17,39 +17,43 @@ Things you may want to cover:
 
 |Column|Type|Options|
 |------|----|-------|
-|body|text|
+|body|text|add_index :messages, :body, null: false|
 |image|string|
-|group_id|integer|null: false|
-|user_id|integer|null: false|
+|group_id|integer|null: false, foreign_key: true|
+|user_id|integer|null: false, foreign_key: true|
 
 ### Association
 - belongs_to :user
-
-
-##userテーブル
-
-|Column|Type|Options|
-|------|----|-------|
-|nickname|string|
-|email|string|
-|password|string|
-
-###Association
-- has_many :messages
 - belongs_to :group
 
 
-## groupテーブル
+##usersテーブル
 
 |Column|Type|Options|
 |------|----|-------|
-|user_id|integer|null: false, foreign_key: true|
+|nickname|string|add_index :users, :nickname, null: false|
+|email|string|add_index :users, :email, null: false|
 
 ###Association
-- has_many :users
+- has_many :messages
+- has_many :members
+- has_many :groups, through: :members
 
 
-## memberテーブル
+## groupsテーブル
+
+|Column|Type|Options|
+|------|----|-------|
+|group_name|string|add_index :groups, :group_name, null: false|
+|member|string|null: false|
+
+###Association
+- has_many :messages
+- has_many :members
+- has_many :users, through: :members
+
+
+## membersテーブル
 
 |Column|Type|Options|
 |------|----|-------|
