@@ -6,7 +6,8 @@
       = message.created_at.strftime("%Y/%m/%d %H:%M")
   .lower-message
     .lower-message__content 
-      %p.lower-message__content
-        = message.content
-      = image_tag message.image.url, class: 'lower-message__image' if message.image.present?
+      - if message.content.present?
+        %p.lower-message__content
+          = message.content
+      = image_tag message.image, class: 'lower-message__image' if message.image.present?
       
