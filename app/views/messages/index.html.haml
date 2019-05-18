@@ -16,7 +16,7 @@
           %li.member 
             メンバー名
       .right-header
-        .right-header__button 
+        = link_to edit_group_path(@group), class: 'right-header__button'  do
           Edit 
     .messages 
       = render @messages
@@ -29,3 +29,4 @@
             = fa_icon 'picture-o', class: 'icon'
             = f.file_field :image, class: 'hidden'
         = f.submit 'Send', class: 'form__submit'
+
