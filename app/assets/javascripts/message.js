@@ -39,7 +39,14 @@ $(function() {
       return html;      
     };
   }
-  
+
+  //自動更新
+  var builsMessageHTML = function(message) {
+    if (message.content && message.image.url) {
+
+    }
+  }
+  //非同期通信
   $('.new_message').on('submit', function(e){
     e.preventDefault();
     var formData = new FormData(this);
@@ -63,4 +70,21 @@ $(function() {
     });
     return false;
   });
+
+  //自動更新
+  var reloadMessages = function() {
+    last_message_id = $("#data-message_id")
+    $.ajax({
+      url:  group_messages_path,
+      type: 'get',
+      dataType: 'json',
+      data: {id: last_message_id}
+    })
+    .done(function(messaes) {
+      console.log('success');
+    })
+    .fail(function() {
+      console.log('error');
+    });
+  };
 });
