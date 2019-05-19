@@ -40,12 +40,64 @@ $(function() {
     };
   }
 
-  //自動更新
-  var builsMessageHTML = function(message) {
-    if (message.content && message.image.url) {
+  //自動更更新
+  var buildMessageHTML = function(message) {
+    if (message.content && message.image) {
+      //data-idが反映されるようにしている
+      var html = '<div class="message" data-id=' + message.id + '>' +
+        '<div class="upper-message">' +
+          '<div class="upper-message__user-name">' +
+            message.user_name +
+          '</div>' +
+          '<div class="upper-message__date">' +
+            message.created_at +
+          '</div>' +
+        '</div>' +
+        '<div class="lower-message">' +
+          '<p class="lower-message__content">' +
+            message.content +
+          '</p>' +
+          '<img src="' + message.image.url + '" class="lower-message__image" >' +
+        '</div>' +
+      '</div>'
+      return html
+    } else if (message.content) {
+      //同様に、data-idが反映されるようにしている
+      var html = '<div class="message" data-id=' + message.id + '>' +
+        '<div class="upper-message">' +
+          '<div class="upper-message__user-name">' +
+            message.user_name +
+          '</div>' +
+          '<div class="upper-message__date">' +
+            message.created_at +
+          '</div>' +
+        '</div>' +
+        '<div class="lower-message">' +
+          '<p class="lower-message__content">' +
+            message.content +
+          '</p>' +
+        '</div>' +
+      '</div>'
+      return html
+    } else if (message.image.url) {
+      //同様に、data-idが反映されるようにしている
+      var html = '<div class="message" data-id=' + message.id + '>' +
+        '<div class="upper-message">' +
+          '<div class="upper-message__user-name">' +
+            message.user_name +
+          '</div>' +
+          '<div class="upper-message__date">' +
+            message.created_at +
+          '</div>' +
+        '</div>' +
+        '<div class="lower-message">' +
+          '<img src="' + message.image.url + '" class="lower-message__image" >' +
+        '</div>' +
+      '</div>'
+    };
+    return html;
+  };
 
-    }
-  }
   //非同期通信
   $('.new_message').on('submit', function(e){
     e.preventDefault();
@@ -73,18 +125,25 @@ $(function() {
 
   //自動更新
   var reloadMessages = function() {
-    last_message_id = $("#data-message_id")
+    var last_message_id = $('.message:last').data('id');
+    var current_group_id = $('.left-header__title').data('group-id')
+    var url = `/groups/${current_group_id}/api/messages`
     $.ajax({
-      url:  group_messages_path,
+      url: url,
       type: 'get',
       dataType: 'json',
-      data: {id: last_message_id}
+      data: {id: last_message_id, group_id: current_group_id}
     })
-    .done(function(messaes) {
-      console.log('success');
+    .done(function(messages) {
+      var insertHTML = '';
+      messages.forEach(function(message){
+        insertHTML = buildMessageHTML(message)
+        $('.messages').append(insertHTML);
+      })
     })
     .fail(function() {
       console.log('error');
     });
   };
+  setInterval(reloadMessages, 5000);
 });
