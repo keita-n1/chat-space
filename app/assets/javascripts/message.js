@@ -1,8 +1,8 @@
 $(function() {
   function buildHTML(message){
-    if ( message.image ) {
+    var image = message.image ? `<img src=${message.image} >` : ''
       var html =
-        `<div class="message" data-message-id=${message.id}>
+        `<div class="message" data-id=${message.id}>
           <div class="upper-message">
             <div class="upper-message__user-name">
               ${message.user_name}
@@ -16,30 +16,14 @@ $(function() {
               ${message.content}
             </p>
           </div>
-          <asset_path src=${message.image} >
+          <div class=""lower-message__image">
+          ${image}
+          </div>
         </div>`
       return html;
-    } else {
-      var html =
-        `<div class="message" data-message-id=${message.id}>
-          <div class="upper-message">
-            <div class="upper-message__user-name">
-              ${message.user_name}
-            </div>        
-            <div class="upper-message__date">
-              ${message.date}
-            </div>
-          </div>
-          <div class="lower-message">
-            <p class="lower-message__content">
-              ${message.content}
-            </p>
-          </div>
-        </div>`
-      return html;      
-    };
   }
-  
+
+  //非同期通信
   $('.new_message').on('submit', function(e){
     e.preventDefault();
     var formData = new FormData(this);
@@ -63,4 +47,29 @@ $(function() {
     });
     return false;
   });
+
+  //自動更新
+  var reloadMessages = function() {
+    var last_message_id = $('.message:last').data('id');
+    var current_group_id = $('.left-header__title').data('group-id')
+    var url = `/groups/${current_group_id}/api/messages`
+    $.ajax({
+      url: url,
+      type: 'GET',
+      dataType: 'json',
+      data: {id: last_message_id, group_id: current_group_id}
+    })
+    .done(function(messages) {
+      var insertHTML = '';
+      messages.forEach(function(message){
+        insertHTML = buildHTML(message)
+        $('.messages').append(insertHTML);
+        $('.messages').animate({scrollTop: $('.messages')[0].scrollHeight}, 'fast');
+      })
+    })
+    .fail(function() {
+      alert.log('error');
+    });
+  };
+  setInterval(reloadMessages, 5000);
 });
