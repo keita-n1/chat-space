@@ -1,6 +1,6 @@
 $(function() {
   function buildHTML(message){
-    if ( message.image ) {
+    var image = message.image ? `<img src=${message.image} >` : ''
       var html =
         `<div class="message" data-id=${message.id}>
           <div class="upper-message">
@@ -17,29 +17,10 @@ $(function() {
             </p>
           </div>
           <div class=""lower-message__image">
-            <img src=${message.image} >
+          ${image}
           </div>
         </div>`
       return html;
-    } else {
-      var html =
-        `<div class="message" data-id=${message.id}>
-          <div class="upper-message">
-            <div class="upper-message__user-name">
-              ${message.user_name}
-            </div>        
-            <div class="upper-message__date">
-              ${message.date}
-            </div>
-          </div>
-          <div class="lower-message">
-            <p class="lower-message__content">
-              ${message.content}
-            </p>
-          </div>
-        </div>`
-      return html;      
-    };
   }
 
   //非同期通信
