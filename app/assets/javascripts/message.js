@@ -68,7 +68,7 @@ $(function() {
       })
     })
     .fail(function() {
-      console.log('error');
+      alert.log('error');
     });
   };
   setInterval(reloadMessages, 5000);
