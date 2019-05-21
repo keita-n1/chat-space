@@ -17,7 +17,7 @@ $(function() {
             </p>
           </div>
           <div class=""lower-message__image">
-          ${image}
+            ${image}
           </div>
         </div>`
       return html;
@@ -55,7 +55,7 @@ $(function() {
     var url = `/groups/${current_group_id}/api/messages`
     $.ajax({
       url: url,
-      type: 'GET',
+      type: 'get',
       dataType: 'json',
       data: {id: last_message_id, group_id: current_group_id}
     })
@@ -68,7 +68,7 @@ $(function() {
       })
     })
     .fail(function() {
-      alert.log('error');
+      alert('error');
     });
   };
   setInterval(reloadMessages, 5000);
