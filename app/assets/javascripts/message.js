@@ -71,5 +71,9 @@ $(function() {
       alert('error');
     });
   };
-  setInterval(reloadMessages, 5000);
+  url = location.href
+  group_id = $('left-header__title').data('group-id')
+  if (url === `/groups/${group_id}/messages`){
+    setInterval(reloadMessages, 5000);
+  }
 });
