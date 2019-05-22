@@ -65,15 +65,17 @@ $(function() {
         insertHTML = buildHTML(message)
         $('.messages').append(insertHTML);
         $('.messages').animate({scrollTop: $('.messages')[0].scrollHeight}, 'fast');
+        clearInterval(setInterval(reloadMessages, 5000))
       })
     })
     .fail(function() {
       alert('error');
     });
   };
-  url = location.href
-  group_id = $('left-header__title').data('group-id')
-  if (url === `/groups/${group_id}/messages`){
+  url = location.href;
+  group_id = $(".left-header__title").data('group-id');
+  if(url === `http://localhost:3000/groups/${group_id}/messages`){
     setInterval(reloadMessages, 5000);
   }
+  
 });
