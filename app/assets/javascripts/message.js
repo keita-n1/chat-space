@@ -1,8 +1,8 @@
 $(function() {
   function buildHTML(message){
-    var image = message.image ? `<img src=${message.image} >` : ''
+    var image = message.image ? `<img src="${message.image}" >` : ''
       var html =
-        `<div class="message" data-id=${message.id}>
+        `<div class="message" data-id="${message.id}">
           <div class="upper-message">
             <div class="upper-message__user-name">
               ${message.user_name}
@@ -27,7 +27,7 @@ $(function() {
   $('.new_message').on('submit', function(e){
     e.preventDefault();
     var formData = new FormData(this);
-    var url = $(this).attr('action')
+    var url = $(this).attr('action');
     $.ajax({
       url: url,
       type: "POST",
@@ -43,7 +43,7 @@ $(function() {
       $('form')[0].reset();
     })
     .fail(function(){
-      alert('error');
+      alert('error1');
     });
     return false;
   });
@@ -69,13 +69,11 @@ $(function() {
       })
     })
     .fail(function() {
-      alert('error');
+      alert('error2');
     });
   };
-  url = location.href;
-  group_id = $(".left-header__title").data('group-id');
-  if(url === `http://localhost:3000/groups/${group_id}/messages`){
-    setInterval(reloadMessages, 5000);
-  }
-  
+    if (href.match(/\groups\/\d+\/messages/)){
+      setInterval(reloadMessages, 5000);
+    }
+    
 });
