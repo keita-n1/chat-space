@@ -28,6 +28,7 @@ $(function() {
     e.preventDefault();
     var formData = new FormData(this);
     var url = $(this).attr('action');
+    console.log(formData);
     $.ajax({
       url: url,
       type: "POST",
@@ -37,6 +38,7 @@ $(function() {
       contentType: false
     })
     .done(function(data){
+      console.log(data);
       var html = buildHTML(data);
       $('.messages').append(html);
       $('.messages').animate({scrollTop: $('.messages')[0].scrollHeight}, 'fast');
@@ -72,8 +74,8 @@ $(function() {
       alert('error2');
     });
   };
-    if (href.match(/\groups\/\d+\/messages/)){
-      setInterval(reloadMessages, 5000);
-    }
+    // if (href.match(/\groups\/\d+\/messages/)){
+    //   setInterval(reloadMessages, 5000);
+    // }
     
 });
