@@ -1,5 +1,7 @@
 
 app_path = File.expand_path('../../../', __FILE__)
+shared_path = File.extend_path('../../../shared/', __FILE__)
+
 working_directory "#{app_path}/current"
 listen "#{app_path}/shared/tmp/sockets/unicorn.sock"
 pid "#{app_path}/shared/tmp/pids/unicorn.pid"
