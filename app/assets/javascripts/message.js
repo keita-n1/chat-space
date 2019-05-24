@@ -74,8 +74,8 @@ $(function() {
       alert('error2');
     });
   };
-    // if (href.match(/\groups\/\d+\/messages/)){
-    //   setInterval(reloadMessages, 5000);
-    // }
+    if (location.pathname.match(/\groups\/\d+\/messages/)){
+      setInterval(reloadMessages, 5000);
+    }
     
 });

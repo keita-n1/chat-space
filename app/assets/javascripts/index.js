@@ -36,6 +36,11 @@ $(function() {
 
   $("#user-search-field").on("keyup", function() {
     var input = $("#user-search-field").val();
+    if (input == "") {
+      index_list.empty();
+      appendErrMsgToHTML("一致するユーザーが見つかりません");
+      return
+    }
     $.ajax({
       type: 'GET',
       url: '/users',
